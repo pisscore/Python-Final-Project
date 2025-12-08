@@ -1,5 +1,4 @@
-# DEAD HANDS - Blackjack but you bet with lives (Inspired by Buckshot roulette and old flash games)
-# Uses async/threading for smooth card animations + the ability to run better
+# DEAD HANDS 
 # fmt: off
 # ^ I have autoformatting, threw in enumeration to run faster/remove the clutter of loops/functions
 import pygame,asyncio,threading,random,math
@@ -273,3 +272,4 @@ class Game:
   s.loop.call_soon_threadsafe(s.loop.stop);pygame.quit()
 
 if __name__=="__main__":Game().run()
+
