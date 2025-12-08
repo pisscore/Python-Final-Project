@@ -61,7 +61,7 @@ class Game:
   s.dealers,s.dealer,s.d_idx,s.has_save=[],None,0,False
   s.state,s.prev,s.msg,s.msg_t,s.shake,s.flash,s.time=State.MENU,State.MENU,"",0,0,0,0
   s.title_a,s.death_t,s.death_p,s.btns,s.running,s.konami,s.cheat,s.react,s.react_t=150,0,[],[],True,[],False,0,0
-  s.win_t,s.has_won=0,False
+  s.win_t,s.has_won,s.busy=0,False,False
   s.loop=asyncio.new_event_loop();threading.Thread(target=lambda:(asyncio.set_event_loop(s.loop),s.loop.run_forever()),daemon=True).start()
 
  def new_game(s):s.dealers=[Dealer(t)for t in s.stages];s.dealer,s.d_idx,s.lives,s.bet,s.title_a=s.dealers[0],0,5,1,150;s.player.clear();s.dealer.hand.clear();s.has_save=True;s.state=State.BET;s.show_msg(f'"{TAUNTS[0]}"',0)
@@ -92,9 +92,11 @@ class Game:
   else:s.state=State.PLAYER
 
  async def hit(s):
-  s.player.add(s.deck.draw());await asyncio.sleep(0.15)
+  if s.busy or s.state!=State.PLAYER:return
+  s.busy=True;s.player.add(s.deck.draw());await asyncio.sleep(0.15)
   if s.player.is_bust:s.dealer.hand.cards[1].face_up=True;s.lives-=s.bet;s.show_msg("BUST",8);await asyncio.sleep(0.4);s.check_end()
   elif s.player.value==21:s.dealer.lives-=s.bet;s.lives+=1 if s.lives<5 else 0;s.show_msg("21! +1 LIFE"if s.lives<6 else"21!",5);s.check_end()
+  s.busy=False
 
  async def dealer_turn(s):
   s.state=State.DEALER;s.dealer.hand.cards[1].face_up=True;await asyncio.sleep(0.4);pv=s.player.value
