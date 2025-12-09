@@ -1,5 +1,6 @@
 # Python-Final-Project
 My Final Project known as "Dead Hands" for python, a buckshot roulette inspired card game. 
+I initially wanted to do a simple news banner but that wouldn't have been sufficient for the libraries in the project.
 The project utilizes async, enumeration and multithreading to have the ability to be ran even on devices with ram in the megabytes
 My biggest challenge was learning the indiviudal libraries and understanding how to piece them together. I most definitely enjoyed making a "rage" game with simple resources/programming and I hope to turn this into an actual thing. 
 
